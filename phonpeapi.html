@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+
+    button {
+      background-color: #6200ea;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #3700b3;
+    }
+
+    .status {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 18px;
+      display: none;
+    }
+
+    .status.processing {
+      background-color: #ff9800;
+      color: #fff;
+    }
+
+    .status.success {
+      background-color: #4caf50;
+      color: #fff;
+    }
+
+    .status.failure {
+      background-color: #f44336;
+      color: #fff;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>PhonPe Payment System</h1>
+      <button id="play-btn" onclick="handlepayment()">Make Payment</button>
+      <div id="payment-status" class="status"></div>
+    </div>
+
+    <script>
+      function initialpayment() {
+        return new Promise((resolve, reject) => {
+          // show processing time
+          const paymentstatus = document.getElementById("payment-status");
+          paymentstatus.innerText = "Processing...";
+          paymentstatus.className = "status processing";
+          paymentstatus.style.display = "block";
+
+          //simulate processing time
+          setTimeout(() => {
+            const success = Math.random() > 0.5; //randomly determining success
+            if (success) {
+              resolve("Payment Successful");
+            } else {
+              reject("Payment Failed");
+            }
+          }, 5000);
+        });
+      }
+
+      function handlepayment() {
+        initialpayment()
+          .then((msg) => {
+            const paymentstatus = document.getElementById("payment-status");
+            paymentstatus.innerText = msg;
+            paymentstatus.className = "status success";
+          })
+          .catch((err) => {
+            const paymentstatus = document.getElementById("payment-status");
+            paymentstatus.innerText = err;
+            paymentstatus.className = "status failure";
+          });
+      }
+    </script>
+  </body>
+</html>
